@@ -24,3 +24,24 @@ A lightweight tag is a simple reference to a commit and contains very little add
 A GitHub Release provides a convenient way to publish a specific version of a project based on a Git tag. It can include release notes and downloadable files.
 
 Attaching a binary such as `client` allows users to download the already-compiled executable without compiling the source code themselves. This makes the project easier to distribute and test.
+## Feature-3: Creating and Using Static Library
+
+### 1. Compare the Makefile from Part 2 and Part 3. What are the key differences in variables/rules that enable the static library?
+
+In Part 2, the Makefile directly linked all object files to create the executable `bin/client`.
+
+In Part 3, the Makefile creates a static library `lib/libmyutils.a` from `mystrfunctions.o` and `myfilefunctions.o`. The executable `bin/client_static` links `main.o` with this library using `-Llib -lmyutils`.
+
+The important changes are the `LIB` and `LIB_OBJS` variables and the rule that creates `lib/libmyutils.a` using `ar`. The final executable depends on the static library instead of directly linking all utility object files.
+
+### 2. What is the purpose of `ar`? Why is `ranlib` often run immediately after it?
+
+The `ar` utility is used to create and manage archive files. In this project, it combines `mystrfunctions.o` and `myfilefunctions.o` into the static library `libmyutils.a`.
+
+`ranlib` creates or updates the symbol index of a static library. This index helps the linker quickly find the required symbols inside the archive. In this project, `ar rcs` already creates the symbol index, so a separate `ranlib` command is not required.
+
+### 3. When you run `nm` on `client_static`, are symbols like `mystrlen` present? What does this tell you about static linking?
+
+Yes, symbols such as `mystrlen`, `mystrcpy`, `mystrncpy`, `mystrcat`, `wordCount`, and `mygrep` are present in `client_static`.
+
+This shows that the required functions from the static library were copied into the final executable during linking. Therefore, the executable contains the required code from `libmyutils.a` and does not need to load that library at runtime.
