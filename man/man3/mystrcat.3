@@ -1,0 +1,22 @@
+.TH MYSTRCAT 3 "September 2026" "OS Assignment" "Library Functions"
+.SH NAME
+mystrcat \- append one string to another
+.SH SYNOPSIS
+.B #include "mystrfunctions.h"
+.PP
+.BI "int mystrcat(char *" dest ", const char *" src ");"
+.SH DESCRIPTION
+The
+.B mystrcat
+function appends the string pointed to by
+.I src
+to the end of the string pointed to by
+.IR dest .
+The destination buffer must have enough space to hold both strings and the
+terminating null character.
+.SH RETURN VALUE
+Returns the number of characters in the resulting string.
+.SH SEE ALSO
+.BR mystrlen (3),
+.BR mystrcpy (3),
+.BR mystrncpy (3)
