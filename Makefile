@@ -60,3 +60,24 @@ obj/myfilefunctions_pic.o: src/myfilefunctions.c
 
 clean:
 	rm -f obj/*.o lib/libmyutils.a lib/libmyutils.so bin/client_static bin/client_dynamic
+# -------------------------
+# Install
+# -------------------------
+
+# -------------------------
+# Install
+# -------------------------
+
+PREFIX = /usr/local
+BINDIR = $(PREFIX)/bin
+LIBDIR = $(PREFIX)/lib
+MANDIR = $(PREFIX)/share/man/man3
+
+install: all
+	install -d $(BINDIR)
+	install -d $(LIBDIR)
+	install -d $(MANDIR)
+	install -m 755 $(DYNAMIC_TARGET) $(BINDIR)/client_dynamic
+	install -m 755 $(STATIC_TARGET) $(BINDIR)/client_static
+	install -m 755 $(DYNAMIC_LIB) $(LIBDIR)/libmyutils.so
+	install -m 644 man/man3/*.3 $(MANDIR)/
